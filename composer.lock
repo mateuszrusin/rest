@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0cbeac737d8015079af402955f24ccf7",
+    "hash": "e23cc14c6c62780100c556bdcd12c15b",
     "packages": [
         {
             "name": "monolog/monolog",
@@ -881,21 +881,13 @@
             "time": "2014-09-22 09:14:18"
         }
     ],
-    "packages-dev": [
-
-    ],
-    "aliases": [
-
-    ],
+    "packages-dev": [],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "ruckuus/php-activerecord-service-provider": 20
     },
     "prefer-stable": false,
-    "platform": [
-
-    ],
-    "platform-dev": [
-
-    ]
+    "platform": [],
+    "platform-dev": []
 }

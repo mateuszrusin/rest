@@ -11,7 +11,7 @@ require_once __DIR__.DS.'vendor'.DS.'autoload.php';
 
 $app = new Silex\Application();
 
-require APP_PATH.'Config'.DS.'dev.php';
+require APP_PATH.'Config'.DS.'app.php';
 require SRC_PATH.'app.php';
 
 $app->run();

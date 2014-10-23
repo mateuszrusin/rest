@@ -1,4 +1,1 @@
-rest
-====
-
-rest
+Silex Restfull API
