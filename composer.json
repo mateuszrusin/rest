@@ -1,0 +1,15 @@
+{
+    "require": {
+        "silex/silex": "~1.2",
+        "symfony/config": "~2.3",
+        "symfony/process": "~2.3",
+        "symfony/serializer": "~2.3",
+        "symfony/monolog-bridge": "~2.3",
+        "ruckuus/php-activerecord-service-provider": "dev-master"
+    },
+    "autoload": {
+      "psr-0": {
+        "Rest": "src/"
+      }
+    }
+}

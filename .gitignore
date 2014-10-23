@@ -1,0 +1,4 @@
+.git
+.idea
+storage/cache/*
+storage/logs/*
