@@ -1,8 +1,8 @@
 <?php
 
-namespace Rest\Model;
+namespace App\Model;
 
-use Rest\Model\Model;
+use App\Model\Model;
 
 class Breed extends Model {
     protected static $belongs_to = array (

@@ -18,7 +18,7 @@ return array(
     'Symfony\\Bridge\\Monolog\\' => array($vendorDir . '/symfony/monolog-bridge'),
     'Silex' => array($vendorDir . '/silex/silex/src'),
     'Ruckuus\\Silex' => array($vendorDir . '/ruckuus/php-activerecord-service-provider/src'),
-    'Rest' => array($baseDir . '/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'Pimple' => array($vendorDir . '/pimple/pimple/lib'),
+    'App' => array($baseDir . '/src'),
 );

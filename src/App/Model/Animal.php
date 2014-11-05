@@ -1,10 +1,11 @@
 <?php
 
-namespace Rest\Model;
+namespace App\Model;
 
-use Rest\Model\Model;
+use App\Model\Model;
 
 class Animal extends Model {
+
     protected static $belongs_to = array (
         array(self::TYPE, 'foreign_key' => 'id_type'),
         array(self::BREED, 'foreign_key' => 'id_breed'),
