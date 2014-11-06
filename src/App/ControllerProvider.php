@@ -20,53 +20,53 @@ class ControllerProvider implements ControllerProviderInterface
     {
         $controllers = $app['controllers_factory'];
 
-        $controllers->post('/{controller}', function (Request $request, $controller) {
-            $model = Model::factory($controller);
+        $controllers->post('/{resource}', function (Request $request, $resource) {
+            $model = Model::factory($resource);
             $dataManager = new DataManager($model);
-            $controller = new CRUDController($dataManager);
+            $crudController = new CRUDController($dataManager);
 
-            $response = $controller->create($request);
+            $response = $crudController->create($request);
 
             return $response;
 
         })->assert('controller', '[a-z]+');
 
-        $controllers->get('/{controller}', function ($controller) {
-            $model = Model::factory($controller);
+        $controllers->get('/{resource}', function ($resource) {
+            $model = Model::factory($resource);
             $dataManager = new DataManager($model);
-            $controller = new CRUDController($dataManager);
+            $crudController = new CRUDController($dataManager);
 
-            $response = $controller->read();
+            $response = $crudController->read();
 
             return $response;
         });
 
-        $controllers->get('/{controller}/{id}', function ($controller, $id) {
-            $model = Model::factory($controller);
+        $controllers->get('/{resource}/{id}', function ($resource, $id) {
+            $model = Model::factory($resource);
             $dataManager = new DataManager($model);
-            $controller = new CRUDController($dataManager);
+            $crudController = new CRUDController($dataManager);
 
-            $response = $controller->one($id);
+            $response = $crudController->one($id);
 
             return $response;
         });
 
-        $controllers->put('/{controller}/{id}', function (Request $request, $controller, $id) {
-            $model = Model::factory($controller);
+        $controllers->put('/{resource}/{id}', function (Request $request, $resource, $id) {
+            $model = Model::factory($resource);
             $dataManager = new DataManager($model);
-            $controller = new CRUDController($dataManager);
+            $crudController = new CRUDController($dataManager);
 
-            $response = $controller->update($id, $request);
+            $response = $crudController->update($id, $request);
 
             return $response;
         });
 
-        $controllers->delete('/{controller}/{id}', function ($controller, $id) {
-            $model = Model::factory($controller);
+        $controllers->delete('/{resource}/{id}', function ($resource, $id) {
+            $model = Model::factory($resource);
             $dataManager = new DataManager($model);
-            $controller = new CRUDController($dataManager);
+            $crudController = new CRUDController($dataManager);
 
-            $response = $controller->delete($id);
+            $response = $crudController->delete($id);
 
             return $response;
         });
