@@ -2,6 +2,7 @@
 
 namespace App\Provider;
 
+use App\Model\Model;
 use App\Provider\ResponseProvider;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
@@ -26,8 +27,12 @@ class ControllerProvider implements ControllerProviderInterface
         })->assert('controller', '[a-z]+');
 
         $controllers->get('/{controller}', function ($controller) {
-            $dataProvider = new ResponseProvider($controller);
-            $response = $dataProvider->read();
+            //entity?
+            $model = Model::factory($controller);
+            //then Model?
+            $dataManager = new DataManager($model);
+            $controller = new Controller($dataManager);
+            $response = $controller->read();
 
             return $response;
         });
