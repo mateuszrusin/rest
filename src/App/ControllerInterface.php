@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Provider;
+namespace App;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-interface ResponseProviderInterface
+interface ControllerInterface
 {
     /**
      * @param Request $request
@@ -13,6 +13,19 @@ interface ResponseProviderInterface
      * @return JsonResponse
      */
     public function create(Request $request);
+
+    /**
+     * @return JsonResponse
+     */
+    public function read();
+
+    /**
+     * @param int     $id
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function update($id, Request $request);
 
     /**
      * @param int $id
@@ -27,17 +40,4 @@ interface ResponseProviderInterface
      * @return JsonResponse
      */
     public function one($id);
-
-    /**
-     * @return JsonResponse
-     */
-    public function read();
-
-    /**
-     * @param int     $id
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function update($id, Request $request);
 }

@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Silex\Application;
 use Silex\Provider\MonologServiceProvider;
-use App\Provider\ControllerProvider;
+use App\ControllerProvider;
 use Ruckuus\Silex\ActiveRecordServiceProvider;
 
 $app->register(new ActiveRecordServiceProvider, $app->raw('config.activerecord'));

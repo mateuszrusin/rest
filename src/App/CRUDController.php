@@ -1,17 +1,23 @@
 <?php
 
-namespace App\Provider;
+namespace App;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class ResponseProvider implements ResponseProviderInterface
+class CRUDController implements ControllerInterface
 {
-    private $dataProvider;
+    /**
+     * @var DataManager
+     */
+    private $dataManager;
 
-    public function __construct($controller) {
-        $this->dataProvider = new DataProvider($controller);
+    /**
+     * @param DataManager $dataManager
+     */
+    public function __construct(DataManager $dataManager) {
+        $this->dataManager = $dataManager;
     }
 
     /**
@@ -19,7 +25,7 @@ class ResponseProvider implements ResponseProviderInterface
      */
     public function read()
     {
-        $result = $this->dataProvider->read();
+        $result = $this->dataManager->read();
 
         if (!is_array($result)) {
             return new JsonResponse(null, JsonResponse::HTTP_NOT_FOUND);
@@ -35,7 +41,7 @@ class ResponseProvider implements ResponseProviderInterface
      */
     public function one($id)
     {
-        $result = $this->dataProvider->one($id);
+        $result = $this->dataManager->one($id);
 
         if (!is_array($result)) {
             return new JsonResponse(null, JsonResponse::HTTP_NOT_FOUND);
@@ -58,11 +64,11 @@ class ResponseProvider implements ResponseProviderInterface
             return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
         }
 
-        if (!$this->dataProvider->exists($id)) {
+        if (!$this->dataManager->exists($id)) {
             return new JsonResponse(null, JsonResponse::HTTP_NOT_FOUND);
         }
 
-        $result = $this->dataProvider->update($id, $data);
+        $result = $this->dataManager->update($id, $data);
 
         if (!$result) {
             return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
@@ -85,7 +91,7 @@ class ResponseProvider implements ResponseProviderInterface
             return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
         }
 
-        $result = $this->dataProvider->create($data);
+        $result = $this->dataManager->create($data);
 
         if (!$result) {
             return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
@@ -101,13 +107,12 @@ class ResponseProvider implements ResponseProviderInterface
      */
     public function delete($id)
     {
-        if (!$this->dataProvider->exists($id)) {
+        if (!$this->dataManager->exists($id)) {
             return new JsonResponse(null, JsonResponse::HTTP_NOT_FOUND);
         }
 
-        $result = $this->dataProvider->delete($id);
+        $result = $this->dataManager->delete($id);
 
         return new JsonResponse($result, JsonResponse::HTTP_OK);
-
     }
 }

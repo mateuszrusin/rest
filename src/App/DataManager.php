@@ -1,16 +1,22 @@
 <?php
 
-namespace App\Provider;
+namespace App;
 
 use App\Model\Model;
 use Silex\Application;
 
-class DataProvider implements DataProviderInterface
+class DataManager implements DataManagerInterface
 {
+    /**
+     * @var Model
+     */
     private $model;
 
-    public function __construct($controller) {
-        $this->model = Model::factory($controller);
+    /**
+     * @param Model $model
+     */
+    public function __construct(Model $model) {
+        $this->model = $model;
     }
 
     /**
@@ -20,8 +26,9 @@ class DataProvider implements DataProviderInterface
      */
     public function exists($id)
     {
-        $model = get_class($this->model);
-        return $model::exists($id);
+        $modelClass = $this->getModelClass();
+
+        return $modelClass::exists($id);
     }
 
     /**
@@ -29,10 +36,10 @@ class DataProvider implements DataProviderInterface
      */
     public function read()
     {
-        $model = get_class($this->model);
+        $modelClass = $this->getModelClass();
         $serializationParams = $this->model->getSerializationParams();
 
-        $result = $model::all($serializationParams);
+        $result = $modelClass::all($serializationParams);
 
         foreach ($result as &$model) {
             $model = $model->to_array($serializationParams);
@@ -44,12 +51,12 @@ class DataProvider implements DataProviderInterface
     /**
      * @param int $id
      *
-     * @return array
+     * @return array|null
      */
     public function one($id)
     {
-        $model = get_class($this->model);
-        $result = $model::find($id);
+        $modelClass = $this->getModelClass();
+        $result = $modelClass::find($id);
 
         if (!$result) {
             return null;
@@ -64,12 +71,12 @@ class DataProvider implements DataProviderInterface
      * @param int $id
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function update($id, array $data)
     {
-        $class = get_class($this->model);
-        $model = $class::find($id);
+        $modelClass = $this->getModelClass();
+        $model = $modelClass::find($id);
 
         $data = array_intersect_key($data, $model->attributes());
 
@@ -86,12 +93,12 @@ class DataProvider implements DataProviderInterface
     /**
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function create(array $data)
     {
-        $class = get_class($this->model);
-        $model = $class::create($data);
+        $modelClass = $this->getModelClass();
+        $model = $modelClass::create($data);
 
         if (!$model) {
             return null;
@@ -105,12 +112,12 @@ class DataProvider implements DataProviderInterface
     /**
      * @param int $id
      *
-     * @return array
+     * @return array|null
      */
     public function delete($id)
     {
-        $class = get_class($this->model);
-        $model = $class::find($id);
+        $modelClass = $this->getModelClass();
+        $model = $modelClass::find($id);
 
         if (!$model) {
             return null;
@@ -119,5 +126,13 @@ class DataProvider implements DataProviderInterface
         $model->delete();
 
         return array();
+    }
+
+    /**
+     * @return string
+     */
+    private function getModelClass()
+    {
+        return get_class($this->model);
     }
 }

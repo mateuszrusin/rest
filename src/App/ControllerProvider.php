@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Provider;
+namespace App;
 
 use App\Model\Model;
-use App\Provider\ResponseProvider;
+use App\DataManager;
+use App\CRUDController;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,40 +21,52 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers = $app['controllers_factory'];
 
         $controllers->post('/{controller}', function (Request $request, $controller) {
-            $dataProvider = new ResponseProvider($controller);
-            $response = $dataProvider->create($request);
+            $model = Model::factory($controller);
+            $dataManager = new DataManager($model);
+            $controller = new CRUDController($dataManager);
+
+            $response = $controller->create($request);
 
             return $response;
+
         })->assert('controller', '[a-z]+');
 
         $controllers->get('/{controller}', function ($controller) {
-            //entity?
             $model = Model::factory($controller);
-            //then Model?
             $dataManager = new DataManager($model);
-            $controller = new Controller($dataManager);
+            $controller = new CRUDController($dataManager);
+
             $response = $controller->read();
 
             return $response;
         });
 
         $controllers->get('/{controller}/{id}', function ($controller, $id) {
-            $dataProvider = new ResponseProvider($controller);
-            $response = $dataProvider->one($id);
+            $model = Model::factory($controller);
+            $dataManager = new DataManager($model);
+            $controller = new CRUDController($dataManager);
+
+            $response = $controller->one($id);
 
             return $response;
         });
 
         $controllers->put('/{controller}/{id}', function (Request $request, $controller, $id) {
-            $dataProvider = new ResponseProvider($controller);
-            $response = $dataProvider->update($id, $request);
+            $model = Model::factory($controller);
+            $dataManager = new DataManager($model);
+            $controller = new CRUDController($dataManager);
+
+            $response = $controller->update($id, $request);
 
             return $response;
         });
 
         $controllers->delete('/{controller}/{id}', function ($controller, $id) {
-            $dataProvider = new ResponseProvider($controller);
-            $response = $dataProvider->delete($id);
+            $model = Model::factory($controller);
+            $dataManager = new DataManager($model);
+            $controller = new CRUDController($dataManager);
+
+            $response = $controller->delete($id);
 
             return $response;
         });
