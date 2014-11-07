@@ -34,6 +34,7 @@ class ControllerProvider implements ControllerProviderInterface
         $controllers->get('/{resource}', function ($resource) {
             $model = Model::factory($resource);
             $dataManager = new DataManager($model);
+
             $crudController = new CRUDController($dataManager);
 
             $response = $crudController->read();

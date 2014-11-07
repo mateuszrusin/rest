@@ -7,16 +7,29 @@ class Model extends \ActiveRecord\Model
     const ANIMAL = 'animal';
     const BREED = 'breed';
     const HOUSE = 'house';
-    const TEMP = 'temp';
+    const VET = 'vet';
     const TYPE = 'type';
 
-    public static function factory($model)
+    /**
+     * @var array
+     */
+    protected static $belongs_to = array();
+
+    /**
+     * @param string $modelName
+     *
+     * @return Model
+     */
+    public static function factory($modelName)
     {
-        $class = __NAMESPACE__.NS.ucfirst($model);
+        $class = __NAMESPACE__.NS.ucfirst($modelName);
 
         return new $class;
     }
 
+    /**
+     * @return array
+     */
     public function getSerializationParams()
     {
         $includes = array();
@@ -28,4 +41,3 @@ class Model extends \ActiveRecord\Model
         return array('include' => $includes);
     }
 };
-?>

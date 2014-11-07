@@ -14,6 +14,6 @@ $app['config.monolog'] = array(
 // Active Record
 $app['config.activerecord'] = array(
     'ar.model_dir' => APP_PATH . 'Model',
-    'ar.connections' =>  array ('development' => 'sqlite://storage/db/rest.db'),
+    'ar.connections' =>  array ('development' => 'sqlite://storage/db/app.db'),
     'ar.default_connection' => 'development'
 );

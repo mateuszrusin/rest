@@ -14,9 +14,9 @@ class CRUDController implements ControllerInterface
     private $dataManager;
 
     /**
-     * @param DataManager $dataManager
+     * @param DataManagerInterface $dataManager
      */
-    public function __construct(DataManager $dataManager) {
+    public function __construct(DataManagerInterface $dataManager) {
         $this->dataManager = $dataManager;
     }
 
